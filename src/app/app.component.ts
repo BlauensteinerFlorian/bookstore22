@@ -3,8 +3,8 @@ import {Book} from "./shared/book";
 
 @Component({
   selector: 'bs-root',
-  /*templateUrl: './app.component.html',*/
-  template: '<bs-book-list></bs-book-list>',
+  templateUrl: './app.component.html',
+  /*template: '<bs-book-list></bs-book-list>',*/
   styles: []
 })
 export class AppComponent {
