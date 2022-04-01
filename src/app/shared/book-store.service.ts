@@ -1,45 +1,47 @@
 import { Injectable } from '@angular/core';
 import {Author, Book, Image} from "./book";
+import {HttpClient} from "@angular/common/http";
+import {catchError, Observable, retry, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookStoreService {
 
-  books: Book[];
+  private api = 'http://bookstore22.s1910456001.student.kwmhgb.at/api';
 
-  constructor() {
-    this.books = [
-      new Book(1,
-        '9783864903571',
-        'Angular',
-        [new Author(1,'Johannes', 'Hoppe'), new Author(2,'Danny','Koppenhagen'),
-          new Author(3,'Ferdinand','Malcher'), new Author(4,'Gregor', 'Woiwode')],
-        new Date(2017, 3, 1),
-        1,
-        'Grundlagen, fortgeschrittene Techniken und Best Practices mit TypeScript - ab Angular 4, inklusive NativeScript und Redux',
-        5,
-        [new Image(1,'https://ng-buch.de/cover2.jpg', 'Buchcover')],
-        'Mit Angular setzen Sie auf ein modernes und modulares...'
-      ),
-      new Book(2,
-        '9783864901546',
-        'AngularJS',
-        [new Author(5,'Philipp', 'Tarasiewicz'),new Author(6,'Robin', 'Böhm')],
-        new Date(2014, 5, 29),
-        1,
-        'Eine praktische Einführung',
-        5,
-        [new Image(2,'https://ng-buch.de/cover1.jpg', 'Buchcover')],
-        'Dieses Buch führt Sie anhand eines zusammenhängenden Beispielprojekts...'
-      )
-    ];
+  constructor(private httpClient: HttpClient) {
   }
-  getAll(){
-    return this.books;
+  getAll():Observable<Array<Book>>{
+    return this.httpClient.get<Array<Book>>(
+      `${this.api}/books`)
+      .pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
   }
 
-  getSingle(isbn: string):Book{
-    return <Book>this.books.find(book => book.isbn === isbn)
+  getSingle(isbn: string):Observable<Book>{
+    return this.httpClient.get<Book>(
+      `${this.api}/books/${isbn}`)
+      .pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
+  create(book:Book):Observable<any>{
+    return this.httpClient.post(`${this.api}/books`, book)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  update(book:Book):Observable<any>{
+    return this.httpClient.put(`${this.api}/books/${book.isbn}`, book)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  remove(isbn:string):Observable<any>{
+    return this.httpClient.delete(`${this.api}/books/${isbn}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  private errorHandler(error: Error | any): Observable<any>{
+    return throwError(error);
   }
 }

@@ -8,6 +8,9 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 import {BookStoreService} from "./shared/book-store.service";
 import { HomeComponent } from './home/home.component';
 import {AppRoutingModule} from "./app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import {AppRoutingModule} from "./app-routing.module";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [BookStoreService],
   bootstrap: [AppComponent]
