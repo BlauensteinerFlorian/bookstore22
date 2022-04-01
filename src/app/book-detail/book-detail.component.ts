@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Book} from "../shared/book";
 import {BookStoreService} from "../shared/book-store.service";
 import {ActivatedRoute} from "@angular/router";

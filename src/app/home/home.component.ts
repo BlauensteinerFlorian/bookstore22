@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'bs-home',
-  template: `
-    <p>
-      home works!
-    </p>
-  `,
+  template: "./home.component.html",
   styles: [
   ]
 })
