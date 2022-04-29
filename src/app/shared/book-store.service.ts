@@ -41,6 +41,16 @@ export class BookStoreService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+    getAllSearch(searchTerm: string):Observable<Array<Book>>{
+    return this.httpClient.get<Array<Book>>(`${this.api}/books/search/${searchTerm}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  check(isbn:string):Observable<Boolean>{
+    return this.httpClient.get<Boolean>(`${this.api}/books/checkisbn/${isbn}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   private errorHandler(error: Error | any): Observable<any>{
     return throwError(error);
   }

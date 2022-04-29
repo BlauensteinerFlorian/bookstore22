@@ -7,7 +7,7 @@
         {{author?.firstName}} {{author?.lastName}} <span *ngIf="!l">,</span>
       </span>
   </div>
-  <div class="extra">ISBN {{ book?.isbn }}</div>
+  <div class="extra">ISBN {{ book?.isbn | isbn: true }}</div>
   <!--<button (click)="myClickHandler()">MyButton</button>-->
 </div>
 

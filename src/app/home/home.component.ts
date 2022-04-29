@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Book} from "../shared/book";
 
 @Component({
   selector: 'bs-home',
-  template: "./home.component.html",
+  templateUrl: "./home.component.html",
   styles: [
   ]
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+  }
+
+  bookSelected(book: Book){
+    this.router.navigate(['../books', book.isbn], {relativeTo: this.route})
   }
 
 }
